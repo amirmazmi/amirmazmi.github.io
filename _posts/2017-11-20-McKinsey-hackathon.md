@@ -26,7 +26,7 @@ Jumping onto the site after a lunch engagement, the problem was as below.
 
 Seeing the words predict definitely got me going so I peeked at the train dateset.
 
-```
+{% highlight r %}
 DateTime,Junction,Vehicles,ID
 2015-11-01 00:00:00,1,15,20151101001
 2015-11-01 01:00:00,1,13,20151101011
@@ -46,10 +46,10 @@ DateTime,Junction,Vehicles,ID
 2015-11-01 02:00:00,4,10,20151101021
 2015-11-01 03:00:00,4,7,20151101031
 ...
-```
+{% endhighlight %}
 And here is a snippet the test dataset. 
 
-```
+{% highlight r %}
 DateTime,Junction,ID
 2017-07-01 00:00:00,1,20170701001
 2017-07-01 01:00:00,1,20170701011
@@ -60,7 +60,8 @@ DateTime,Junction,ID
 2017-07-01 00:00:00,4,20170701001
 2017-07-01 01:00:00,4,20170701011
 ...
-```
+{% endhighlight %}
+
 &emsp;&emsp;Ooh! Time-series data! This got me really excited, considering that I have time until my dinner engangement, I fired up RStudio. Drawing from my experience, this could go two ways either similar to share/forex prices (stochastic) or similar to building energy data (pattern based on hour of day, day of week etc.). 
 
 Looking at the data itself, the following is obvious:
@@ -71,7 +72,7 @@ Based on the rules, we are not to infer any other type of information outside of
 
   After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. Read more about timetk https://rdrr.io/cran/timetk/f/README.md.
 
-{% highlight c++ %}
+{% highlight r %}
 # separate data into junctions
 dfjunc <- lapply( levels(traindata$Junction), function(k){
                   				traindata[ which(traindata$Junction == k ) ,]} )
@@ -93,18 +94,17 @@ We note the following:
 * some spikes at points (possibly other road closures?)
 * a dip over the christmas and new year period in 2017 (interestingly 2016 had barely noticeable effect)
 
+<br>
 Moving on, I plotted some boxplots across the hours, days of the week and day of months. 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-hourofday.png)
 
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-dayofweek.png)
 
-boxplot
-hour 
-day of week
-day month
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-dayofmonth.png)
 
 Noting the outliers, I continued on out of curiosity and created a boxpot for month of the year as well.
 
-boxplot - month of the year
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-monthofyear.png)
 
 
 
@@ -115,19 +115,17 @@ boxplot - month of the year
 
 
 <!---
-
 Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
 */
 
 ![_config.yml]({{ site.baseurl }}/images/config.png)
 
 The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
-
-
-
-
 --->
+
+
 
 
 [1]: https://datahack.analyticsvidhya.com/contest/mckinsey-analytics-hackathon/
 
+<br><br>

@@ -83,7 +83,7 @@ Based on the rules, we are not to infer any other type of information outside of
 
 
 
-
+<!-
 !Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
 
 ![_config.yml]({{ site.baseurl }}/images/config.png)
@@ -93,7 +93,7 @@ Based on the rules, we are not to infer any other type of information outside of
 
 
 
-
+->
 
 
 [1]: https://datahack.analyticsvidhya.com/contest/mckinsey-analytics-hackathon/

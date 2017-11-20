@@ -64,6 +64,7 @@ DateTime,Junction,ID
 
 &emsp;&emsp;Ooh! Time-series data! This got me really excited, considering that I have time until my dinner engangement, I fired up RStudio. Drawing from my experience, this could go two ways either similar to share/forex prices (stochastic) or similar to building energy data (pattern based on hour of day, day of week etc.). 
 
+<br>
 Looking at the data itself, the following is obvious:
 
 * ID is just a concatenation of the date, hour and junction
@@ -85,10 +86,23 @@ dfjunc1 <- tk_augment_timeseries_signature(dfjunc$`1`)
 names(dfjunc1)
 {% endhighlight %}
 
+{$ highlight r %}
+[1] "DateTime"  "Junction"  "Vehicles"  "ID"        "date"      "index.num" "diff"     
+[8] "year"      "year.iso"  "half"      "quarter"   "month"     "month.xts" "month.lbl"
+[15] "day"       "hour"      "minute"    "second"    "hour12"    "am.pm"     "wday"     
+[22] "wday.xts"  "wday.lbl"  "mday"      "qday"      "yday"      "mweek"     "week"     
+[29] "week.iso"  "week2"     "week3"     "week4"     "mday7" 
+{% endhighlight %}
+
+
+<br>
 Look at all the features extracted just from the datetime string. Next up was plotting the time series data itself. 
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-timeseries.png)
 
-plot - time vs vehicles
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-timeserieszoom.png)
 
+
+<br>
 We note the following:
 * increasing trend over time (maybe population growth? cheap car loans? cheap cars?)
 * some spikes at points (possibly other road closures?)
@@ -102,7 +116,8 @@ Moving on, I plotted some boxplots across the hours, days of the week and day of
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-dayofmonth.png)
 
-Noting the outliers, I continued on out of curiosity and created a boxpot for month of the year as well.
+<br>
+Out of curiosity and created a boxpot for month of the year as well.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-monthofyear.png)
 

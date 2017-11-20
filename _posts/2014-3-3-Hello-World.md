@@ -1,7 +1,10 @@
 ---
 layout: post
-title: You're up and running!
+title: McKinsey Analytics Hackathon
 ---
+
+Over the weekend, I joined my first hackathon organized by McKinsey and hosted on AnalyticsVidhya. 
+
 
 Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
 

@@ -62,6 +62,7 @@ DateTime,Junction,ID
 ...
 {% endhighlight %}
 
+<br>
 &emsp;&emsp;Ooh! Time-series data! This got me really excited, considering that I have time until my dinner engangement, I fired up RStudio. Drawing from my experience, this could go two ways either similar to share/forex prices (stochastic) or similar to building energy data (pattern based on hour of day, day of week etc.). 
 
 <br>
@@ -76,7 +77,7 @@ Based on the rules, we are not to infer any other type of information outside of
 {% highlight r %}
 # separate data into junctions
 dfjunc <- lapply( levels(traindata$Junction), function(k){
-                  				traindata[ which(traindata$Junction == k ) ,]} )
+                  traindata[ which(traindata$Junction == k ) ,]} )
 dfjunc <- setNames(dfjunc, seq(1,4) )
 
 # format datetime and extract information
@@ -103,7 +104,9 @@ Look at all the features extracted just from the datetime string. Next up was pl
 
 
 <br>
-We note the following:
+From here, I noted the shape of traffic daily and there seems to be a pattern for different days of the week. This intuition is something I picked up from my previous role working with building energy consumption. 
+
+Note the following:
 * increasing trend over time (maybe population growth? cheap car loans? cheap cars?)
 * some spikes at points (possibly other road closures?)
 * a dip over the christmas and new year period in 2017 (interestingly 2016 had barely noticeable effect)
@@ -129,14 +132,6 @@ Out of curiosity and created a boxpot for month of the year as well.
 
 
 
-<!---
-Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
-*/
-
-![_config.yml]({{ site.baseurl }}/images/config.png)
-
-The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
---->
 
 
 

@@ -71,7 +71,7 @@ Based on the rules, we are not to infer any other type of information outside of
 
   After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. Read more about timetk https://rdrr.io/cran/timetk/f/README.md.
 
-'''{r}
+'''r
 # separate data into junctions
 dfjunc <- lapply( levels(traindata$Junction), function(k){
                   				traindata[ which(traindata$Junction == k ) ,]} )

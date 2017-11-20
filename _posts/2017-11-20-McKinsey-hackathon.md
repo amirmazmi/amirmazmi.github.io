@@ -10,16 +10,16 @@ title: McKinsey Analytics Online Hackathon
 &emsp;&emsp;To be honest, I don't remember how I found out about this event but I just signed up without thinking much and I was not really planning on participating as I knew my weekend was full. Initially, it was just to see what kind of problem would be presented. 
 
 Jumping onto the site after a lunch engagement, the problem was as below. 
-
 > ### Problem Statement
->Mission
+> #### Mission
+>
 >You are working with the government to transform your city into a smart city. The vision is to convert it into a digital and intelligent city to improve the efficiency of services for the citizens. One of the problems faced by the government is traffic. You are a data scientist working to manage the traffic of the city better and to provide input on infrastructure planning for the future.
- 
+>
 >The government wants to implement a robust traffic system for the city by being prepared for traffic peaks. They want to understand the traffic patterns of the four junctions of the city. Traffic patterns on holidays, as well as on various other occasions during the year, differ from normal working days. This is important to take into account for your forecasting. 
- 
->Your task 
+>
+> #### Your task 
+>
 >To predict traffic patterns in each of these four junctions for the next 4 months.
- 
 > Time to apply your data science skills. Good luck!
 
 <br>
@@ -61,7 +61,7 @@ DateTime,Junction,ID
 2017-07-01 01:00:00,4,20170701011
 ...
 ```
-Ooh! Time-series data! This really got me excited, considering that I have time until my dinner engangement, I fired up RStudio. 
+&emsp;&emsp;Ooh! Time-series data! This really got me excited, considering that I have time until my dinner engangement, I fired up RStudio. Drawing from my experience, this could go two ways either similar to share/forex prices (stochastic) or similar to building energy data (pattern based on hour of day, day of week etc.). 
 
 Looking at the data itself, the following is obvious:
 * ID is just a concatenation of the date, hour and junction
@@ -69,15 +69,26 @@ Looking at the data itself, the following is obvious:
 
 Based on the rules, we are not to infer any other type of information outside of the given dataset, i.e. don't assume holidays which are country specific. 
 
+&emsp;&emsp;After reading in the data, first the convert to POSIX using the **lubridate** package, the time series features are extracted using the **_tk_augment_time_series_** from the package **timetk** (previously known as timekit). The functions extracts so many different layers of information from the datetime string.
+
+```
+
+```
 
 
 
-<br><br><br><br><br>
-Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
+
+
+
+
+
+
+
+!Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
 
 ![_config.yml]({{ site.baseurl }}/images/config.png)
 
-The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
+!The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
 
 
 

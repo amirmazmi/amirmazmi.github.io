@@ -72,7 +72,11 @@ Looking at the data itself, the following is obvious:
 * The only features seems to be the date and time
 Based on the rules, we are not to infer any other type of information outside of the given dataset, i.e. don't assume holidays which are country specific.
 
-  After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. Read more about timetk https://rdrr.io/cran/timetk/f/README.md.
+&emsp;&emsp;After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. 
+
+&emsp;&emsp;*Read more about timetk https://rdrr.io/cran/timetk/f/README.md.*
+
+&emsp;&emsp;Before we proceed it is important to remember that just because the data contains timestamps, does not necessarily mean it is the correct timestamp. The timestamp could be in UTC where the data was collected in another part of the world. This is sometimes the case when working with time series data.  
 
 {% highlight r %}
 # separate data into junctions
@@ -86,15 +90,17 @@ dfjunc1 <- tk_augment_timeseries_signature(dfjunc$`1`)
 
 names(dfjunc1)
 
-[1] "DateTime"  "Junction"  "Vehicles"  "ID"        "date"      "index.num" "diff"     
-[8] "year"      "year.iso"  "half"      "quarter"   "month"     "month.xts" "month.lbl"
-[15] "day"       "hour"      "minute"    "second"    "hour12"    "am.pm"     "wday"     
-[22] "wday.xts"  "wday.lbl"  "mday"      "qday"      "yday"      "mweek"     "week"     
-[29] "week.iso"  "week2"     "week3"     "week4"     "mday7" 
+[1] "DateTime"  "Junction"  "Vehicles"  "ID"        "date"   
+[6] "index.num" "diff"      "year"      "year.iso"  "half"   
+[11]"quarter"   "month"     "month.xts" "month.lbl" "day"    
+[16]"hour"      "minute"    "second"    "hour12"    "am.pm" 
+[21]"wday"      "wday.xts"  "wday.lbl"  "mday"      "qday"  
+[26]"yday"      "mweek"     "week"      "week.iso"  "week2"  
+[31]"week3"     "week4"     "mday7" 
 {% endhighlight %}
 
 
-<br>
+<br><br>
 Look at all the features extracted just from the datetime string. Next up was plotting the time series data itself. 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-timeseries.png)
 
@@ -102,7 +108,7 @@ Look at all the features extracted just from the datetime string. Next up was pl
 
 
 <br>
-From here, I noted the shape of traffic daily and there seems to be a pattern for different days of the week. This intuition is something I picked up from my previous role working with building energy consumption. 
+&emsp;&emsp;From here, I noted the shape of traffic daily and there seems to be a pattern for different days of the week. This intuition is something I picked up from my previous role working with building energy consumption. 
 
 Note the following:
 * increasing trend over time (maybe population growth? cheap car loans? cheap cars?)
@@ -117,13 +123,25 @@ Moving on, I plotted some boxplots across the hours, days of the week and day of
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-dayofmonth.png)
 
+&emsp;&emsp;Note the outliers from the boxplots. It is expected to have outliers at the top where the traffic does spike but for the bottom part which we observe for christmas and new year, it is not observable below since it is mixed with other data. 
+
 <br>
-Out of curiosity and created a boxpot for month of the year as well.
+
+&emsp;&emsp;From the boxplots and time series data, it was intuitive for me to imagine the plot below. As you will note it is similar to the day of week plot. 
+*Note the plot below was created post event to explain this better*
+
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-changeoverweek.png)
+
+
+<br>
+Out of curiosity, I created a boxplot for month of the year as well.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-monthofyear.png)
 
+<br>
+Next since, confident that the data is well understood, I stepped through the hour of a weekday. 
 
-
+plot - hour of day for day of week 
 
 
 

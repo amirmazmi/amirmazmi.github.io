@@ -86,7 +86,7 @@ dfjunc1 <- tk_augment_timeseries_signature(dfjunc$`1`)
 
 names(dfjunc1)
 {% endhighlight %}
-
+&emsp
 {$ highlight r %}
 [1] "DateTime"  "Junction"  "Vehicles"  "ID"        "date"      "index.num" "diff"     
 [8] "year"      "year.iso"  "half"      "quarter"   "month"     "month.xts" "month.lbl"

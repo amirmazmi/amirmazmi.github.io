@@ -7,7 +7,7 @@ title: McKinsey Analytics Online Hackathon
 
 &emsp;&emsp;Over the weekend, I joined my first hackathon organized by [McKinsey and hosted on AnalyticsVidhya][1]. The hackathon was over a 24-hour period starting from 11am AEST Saturday and finishing the next day. The event itself was a hiring hack and includes the prize of an all-expense paid trip to any international analytics conference of choie as a McKinsey guest. 
 
-&emsp;&emsp;To be honest, I don't remember how I found out about this event but I just signed up without thinking much and I was not really planning on participating as I knew my weekend was full. Initially, it was just to see what kind of problem would be presented. 
+&emsp;&emsp;To be honest, I don't remember how I found out about this event but I just signed up without thinking much and was not really planning on participating as I knew my weekend was full. Initially, the thought was just to see what kind of problem would be presented.
 
 Jumping onto the site after a lunch engagement, the problem was as below. 
 > ### Problem Statement
@@ -61,19 +61,50 @@ DateTime,Junction,ID
 2017-07-01 01:00:00,4,20170701011
 ...
 ```
-&emsp;&emsp;Ooh! Time-series data! This really got me excited, considering that I have time until my dinner engangement, I fired up RStudio. Drawing from my experience, this could go two ways either similar to share/forex prices (stochastic) or similar to building energy data (pattern based on hour of day, day of week etc.). 
+&emsp;&emsp;Ooh! Time-series data! This got me really excited, considering that I have time until my dinner engangement, I fired up RStudio. Drawing from my experience, this could go two ways either similar to share/forex prices (stochastic) or similar to building energy data (pattern based on hour of day, day of week etc.). 
 
 Looking at the data itself, the following is obvious:
+
 * ID is just a concatenation of the date, hour and junction
 * The only features seems to be the date and time
+Based on the rules, we are not to infer any other type of information outside of the given dataset, i.e. don't assume holidays which are country specific.
 
-Based on the rules, we are not to infer any other type of information outside of the given dataset, i.e. don't assume holidays which are country specific. 
+  After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. Read more about timetk https://rdrr.io/cran/timetk/f/README.md.
 
-&emsp;&emsp;After reading in the data, first the convert to POSIX using the **lubridate** package, the time series features are extracted using the **_tk_augment_time_series_** from the package **timetk** (previously known as timekit). The functions extracts so many different layers of information from the datetime string.
+'''{r}
+# separate data into junctions
+dfjunc <- lapply( levels(traindata$Junction), function(k){
+                  				traindata[ which(traindata$Junction == k ) ,]} )
+dfjunc <- setNames(dfjunc, seq(1,4) )
 
+# format datetime and extract information
+dfjunc$'1'$DateTime <- ymd_hms(dfjunc$'1'$DateTime)
+dfjunc1 <- tk_augment_timeseries_signature(dfjunc$`1`)
+
+names(dfjunc1)
 ```
 
-```
+Look at all the features extracted just from the datetime string. Next up was plotting the time series data itself. 
+
+plot - time vs vehicles
+
+We note the following:
+* increasing trend over time (maybe population growth? cheap car loans? cheap cars?)
+* some spikes at points (possibly other road closures?)
+* a dip over the christmas and new year period in 2017 (interestingly 2016 had barely noticeable effect)
+
+Moving on, I plotted some boxplots across the hours, days of the week and day of months. 
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-hourofday.png)
+
+
+boxplot
+hour 
+day of week
+day month
+
+Noting the outliers, I continued on out of curiosity and created a boxpot for month of the year as well.
+
+boxplot - month of the year
 
 
 
@@ -81,7 +112,9 @@ Based on the rules, we are not to infer any other type of information outside of
 
 
 
-/*
+
+
+<!---
 
 Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
 */
@@ -93,7 +126,7 @@ The easiest way to make your first post is to edit this one. Go into /_posts/ an
 
 
 
-->
+--->
 
 
 [1]: https://datahack.analyticsvidhya.com/contest/mckinsey-analytics-hackathon/

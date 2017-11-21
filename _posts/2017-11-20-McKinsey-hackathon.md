@@ -9,6 +9,9 @@ title: McKinsey Analytics Online Hackathon
 
 &emsp;&emsp;To be honest, I don't remember how I found out about this event but I just signed up without thinking much and was not really planning on participating as I knew my weekend was full. Initially, the thought was just to see what kind of problem would be presented.
 
+*This post will focus on junction1 (one of four junctions) and describe the thinking at that time. During the event, a lot of time was spent exploring the data before even beginning to model. The steps here are definitely not optimal as time was very limited, so the initial focus was to be able to output a realistic result and see how it ranks.* 
+
+
 Jumping onto the site after a lunch engagement, the problem was as below. 
 > ### Problem Statement
 > #### Mission
@@ -67,16 +70,15 @@ DateTime,Junction,ID
 
 <br>
 Looking at the data itself, the following is obvious:
-
 * ID is just a concatenation of the date, hour and junction
 * The only features seems to be the date and time
 Based on the rules, we are not to infer any other type of information outside of the given dataset, i.e. don't assume holidays which are country specific.
 
-&emsp;&emsp;After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. 
+&emsp;&emsp;After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. This should be followed by the usual *str()* and *summary()* to review the data.
 
-&emsp;&emsp;*Read more about timetk https://rdrr.io/cran/timetk/f/README.md.*
+&emsp;&emsp;*[Read more about timetk.]*[2] 
 
-&emsp;&emsp;Before we proceed it is important to remember that just because the data contains timestamps, does not necessarily mean it is the correct timestamp. The timestamp could be in UTC where the data was collected in another part of the world. This is sometimes the case when working with time series data.  
+&emsp;&emsp;Before we proceed it is important to remember that just because the data contains timestamps, does not necessarily mean it is the correct timestamp. The timestamp could be in UTC where the data was collected in another part of the world. This is sometimes the case when working with time series data.
 
 {% highlight r %}
 # separate data into junctions
@@ -108,7 +110,7 @@ Look at all the features extracted just from the datetime string. Next up was pl
 
 
 <br>
-&emsp;&emsp;From here, I noted the shape of traffic daily and there seems to be a pattern for different days of the week. This intuition is something I picked up from my previous role working with building energy consumption. 
+&emsp;&emsp;From here, I noted the shape of traffic daily and there seems to be a pattern for different days of the week. This intuition is something I picked up from my previous role working with building energy consumption. In that role, an additional feature was the outside air temperature. Essentially, if we were to plot a 3-dimensional surface, the x and y axes would be hour of day and increasing time (which can be represented by POSIX time in the *index.num* column) with the dependent variable being number of vehicles.
 
 Note the following:
 * increasing trend over time (maybe population growth? cheap car loans? cheap cars?)
@@ -125,25 +127,23 @@ Moving on, I plotted some boxplots across the hours, days of the week and day of
 
 &emsp;&emsp;Note the outliers from the boxplots. It is expected to have outliers at the top where the traffic does spike but for the bottom part which we observe for christmas and new year, it is not observable below since it is mixed with other data. 
 
-<br>
+&emsp;&emsp;At this point, it did not seem that the boxplots provided much value since they do not represent an accurate picture. Again, just look at hour between 10am and 7pm from the "Hour of day" figure, it is easy to understand that since the data is increasing over time, even the outliers are possibly just data at the later end of the time scale. 
 
-&emsp;&emsp;From the boxplots and time series data, it was intuitive for me to imagine the plot below. As you will note it is similar to the day of week plot. 
-*Note the plot below was created post event to explain this better*
+&emsp;&emsp;An interesting point to note is the small range of data in the early hours of the morning, suggesting that despite a large increase during the day the traffic at this hour has not significantly increased. 
+
+<br>
+The plot of change over week describe the intuition at the time. 
+&emsp;*Note the plot below was created post event to explain this better*
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-changeoverweek.png)
 
 
 <br>
-Out of curiosity, I created a boxplot for month of the year as well.
+&emsp;&emsp;Progressing further and to confirm the intuition, I stepped through the hours of every weekday. The plot below shows the vehicles over time for the every 5pm of every Monday. 
 
-![_config.yml]({{ site.baseurl }}/images/2017-11-20-monthofyear.png)
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-stephourweekday.png)
 
-<br>
-Next since, confident that the data is well understood, I stepped through the hour of a weekday. 
-
-plot - hour of day for day of week 
-
-
+&emsp;&emsp;It is immediately obvious that the data is almost linear here. It would be easy to model at this granularity, so model and look at residual without forgetting to remove unnecessary columns that are not continuous variables such as labels and repetitive values ( e.g. wday and wday.xts).
 
 
 
@@ -153,5 +153,5 @@ plot - hour of day for day of week
 
 
 [1]: https://datahack.analyticsvidhya.com/contest/mckinsey-analytics-hackathon/
-
+[2]: https://rdrr.io/cran/timetk/f/README.md
 <br><br>

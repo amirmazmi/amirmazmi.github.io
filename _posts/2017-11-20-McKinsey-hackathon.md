@@ -118,6 +118,14 @@ Note the following:
 * a dip over the christmas and new year period in 2017 (interestingly 2016 had barely noticeable effect)
 
 <br>
+&emsp;&emsp;Before continuing here, I opened another file in the editor (pipeline.R)  and start thinking about the pipeline. Building processes as we go along is the best way to make sure it is documented and ideas are not forgotten or lost. 
+
+Start the pipeline with a simple flow:
+> Initialize >> Read data >> ...
+
+&emsp;&emsp;As we understand the data in EDA (exploratory data analysis), we can update this file either with code or just with simple comments. 
+
+<br>
 Moving on, I plotted some boxplots across the hours, days of the week and day of months. 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-hourofday.png)
 
@@ -145,18 +153,23 @@ The plot of change over week describe the intuition at the time.
 
 &emsp;&emsp;It is immediately obvious that the data is almost linear here. It would be easy to model at this granularity, so model and look at residual without forgetting to remove unnecessary columns that are not continuous variables such as labels and repetitive values ( e.g. wday and wday.xts).
 
-&emsp;&emsp;Normally at this point, I would look at variable correlations prior to building a model but in the moment, I had limited time and wanted to get at least one submission in and iterate based on the result. So I made a note and if I had time, I would come back to it. 
+&emsp;&emsp;Normally at this point, I would look at variable correlations prior to building a model but in the moment, I had limited time and wanted to get at least one submission in. The priority here was to think about the pipeline to make it easy to iterate. So, I made a note and if I had time, I would come back to it. 
 
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-actualvsfitted values.png)
 
+Next, to assess the residuals, create the figure below.
 
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals1.png)
 
+&emsp;&emsp;It is clear that there are several outliers from the model. This could easily be as a result of a poor model which is known to be the case since the features were not filtered properly. Refocusing again on the pipeline, just creates some filters to remove the outliers as with better feature selection, this would already be automated. 
 
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-actualvsfittedvalues2.png)
 
+This looks better, now assess residuals. 
 
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals1.png)
 
-
-
-
+&emsp;&emsp;All the outliers have been removed. The data looks to be normally distributed too from the QQ plots. 
 
 
 [1]: https://datahack.analyticsvidhya.com/contest/mckinsey-analytics-hackathon/

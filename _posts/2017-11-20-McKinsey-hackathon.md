@@ -168,7 +168,7 @@ Next, to assess the residuals, create the figure below.
 
 This looks better, now assess residuals. 
 
-![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals1.png)
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals2.png)
 
 &emsp;&emsp;All the outliers have been removed. The data looks to be normally distributed too from the QQ plots. 
 

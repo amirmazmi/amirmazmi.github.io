@@ -296,14 +296,16 @@ cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
 &emsp;&emsp; Essentially the code looks at each junctions and models at the level of hour of day and day of week. I am sure it is obvious that using for loops are not ideal and vectorized operations are preferred but this was a hackathon with limited time. Also, it helped me to step through the code as I was writing it without having to resort to global variables etc. If this was an actual project, it would obviously be converted to an actual function, especially the model call to make it easily changeable. 
 <br><br><br>
 
+
 ## Result
 ---
+
 
 &emsp;&emsp;Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. There are two scores since one is the public data and the leaderboard score was for the private data. It was not bad  since the leader at the time had a score of about 5 (less is better - RMSE metric) and past the 100th place the score were in the triple digits. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-firstsubmission.PNG)
 
-Unfortunately, if you go to the leaderboard now you will not find my name on it. Why? Due to the way the submissions works, you could submit as many times to check your results but you had to click on a different (as in located elsewhere) to do a final submission. This was to the dismay of many as I found out in Slack chat, in fact, even the leader with the score of 5 is also not on the list. At one point, the leaderboard grew to 550 participants. 
+&emsp;&emsp;Unfortunately, if you go to the leaderboard now you will not find my name on it. Why? Due to the way the submissions works, you could submit as many times to check your results but you had to click on a different (as in located elsewhere) to do a final submission. This was to the dismay of many as I found out in Slack chat, in fact, even the leader with the score of 5 is also not on the list. At one point, the leaderboard grew to 550 participants. 
 
 
 ### What have I learned? 
@@ -314,7 +316,7 @@ Now I understand why hackathons can be addictive, even doing one for a few hours
 
 All files can be found from my github [github.com/amirmazmi/mckinseyhack2017][3]
 
-<br><br>
+<br><br><br><br>
 
 [1]: https://datahack.analyticsvidhya.com/contest/mckinsey-analytics-hackathon/
 [2]: https://rdrr.io/cran/timetk/f/README.md

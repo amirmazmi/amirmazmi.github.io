@@ -314,6 +314,7 @@ cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
 
 Now I understand why hackathons can be addictive, even doing one for a few hours really got my brain going. 
 
+<br><br>
 All files can be found from my github [github.com/amirmazmi/mckinseyhack2017][3]
 
 <br><br><br><br>

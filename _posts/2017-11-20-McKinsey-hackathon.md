@@ -131,11 +131,7 @@ Start the pipeline with a simple flow:
 
 <br>
 Moving on, I plotted some boxplots across the hours, days of the week and day of months. 
-![_config.yml]({{ site.baseurl }}/images/2017-11-20-hourofday.png)
-
-![_config.yml]({{ site.baseurl }}/images/2017-11-20-dayofweek.png)
-
-![_config.yml]({{ site.baseurl }}/images/2017-11-20-dayofmonth.png)
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-boxplots.png)
 
 &emsp;&emsp;Note the outliers from the boxplots. It is expected to have outliers at the top where the traffic does spike but for the bottom part which we observe for christmas and new year, it is not observable below since it is mixed with other data. 
 

@@ -297,8 +297,8 @@ cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
 <br><br><br>
 
 
-## Result
----
+## Result   
+---   
 
 
 &emsp;&emsp;Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. There are two scores since one is the public data and the leaderboard score was for the private data. It was not bad  since the leader at the time had a score of about 5 (less is better - RMSE metric) and past the 100th place the score were in the triple digits. 

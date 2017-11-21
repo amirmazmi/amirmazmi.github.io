@@ -73,6 +73,10 @@ Looking at the data itself, the following is obvious:
 * ID is just a concatenation of the date, hour and junction
 * The only features seems to be the date and time
 Based on the rules, we are not to infer any other type of information outside of the given dataset, i.e. don't assume holidays which are country specific.
+<br><br>
+## Exploratory Data Analysis
+
+### Data Wrangling
 
 &emsp;&emsp;After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. This should be followed by the usual *str()* and *summary()* to review the data.
 
@@ -100,9 +104,9 @@ names(dfjunc1)
 [26]"yday"      "mweek"     "week"      "week.iso"  "week2"  
 [31]"week3"     "week4"     "mday7" 
 {% endhighlight %}
-
-
 <br><br>
+
+### Analysis
 Look at all the features extracted just from the datetime string. Next up was plotting the time series data itself. 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-timeseries.png)
 
@@ -151,6 +155,9 @@ The plot of change over week describe the intuition at the time.
 &emsp;&emsp;Progressing further and to confirm the intuition, I stepped through the hours of every weekday. The plot below shows the vehicles over time for the every 5pm of every Monday. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-stephourweekday.png)
+
+<br><br>
+### Model fit
 
 &emsp;&emsp;It is immediately obvious that the data is almost linear here. It would be easy to model at this granularity, so model and look at residual without forgetting to remove unnecessary columns that are not continuous variables such as labels and repetitive values ( e.g. wday and wday.xts).
 

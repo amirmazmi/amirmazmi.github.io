@@ -76,7 +76,7 @@ Based on the rules, we are not to infer any other type of information outside of
 
 &emsp;&emsp;After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. This should be followed by the usual *str()* and *summary()* to review the data.
 
-&emsp;&emsp;*[Read more about timetk.]*[2] 
+&emsp;&emsp;[*Read more about timetk.*][2] 
 
 &emsp;&emsp;Before we proceed it is important to remember that just because the data contains timestamps, does not necessarily mean it is the correct timestamp. The timestamp could be in UTC where the data was collected in another part of the world. This is sometimes the case when working with time series data.
 
@@ -141,6 +141,7 @@ Moving on, I plotted some boxplots across the hours, days of the week and day of
 
 <br>
 The plot of change over week describe the intuition at the time.
+
 &emsp;*Note the plot below was created post event to explain this better*
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-changeoverweek.png)
@@ -161,7 +162,7 @@ Next, to assess the residuals, create the figure below.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals1.png)
 
-&emsp;&emsp;It is clear that there are several outliers from the model. This could easily be as a result of a poor model which is known to be the case since the features were not filtered properly. Refocusing again on the pipeline, just creates some filters to remove the outliers as with better feature selection, this would already be automated. 
+&emsp;&emsp;It is clear that there are several outliers from the model. This could easily be as a result of a poor model which is known to be the case since the features were not filtered properly. Refocusing again on the pipeline, proceed to create some filters to remove the outliers as with better feature selection, this would already be automated. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-actualvsfittedvalues2.png)
 

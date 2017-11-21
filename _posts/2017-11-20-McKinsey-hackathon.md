@@ -3,8 +3,6 @@ layout: post
 title: McKinsey Analytics Online Hackathon
 ---
 
-
-
 &emsp;&emsp;Over the weekend, I joined my first hackathon organized by [McKinsey and hosted on AnalyticsVidhya][1]. The hackathon was over a 24-hour period starting from 11am AEST Saturday and finishing the next day. The event itself was a hiring hack and includes the prize of an all-expense paid trip to any international analytics conference of choie as a McKinsey guest. 
 
 &emsp;&emsp;To be honest, I don't remember how I found out about this event but I just signed up without thinking much and was not really planning on participating as I knew my weekend was full. Initially, the thought was just to see what kind of problem would be presented.
@@ -73,8 +71,10 @@ Looking at the data itself, the following is obvious:
 * ID is just a concatenation of the date, hour and junction
 * The only features seems to be the date and time
 Based on the rules, we are not to infer any other type of information outside of the given dataset, i.e. don't assume holidays which are country specific.
-<br><br>
+<br><br><br>
+
 ## Exploratory Data Analysis
+---
 
 ### Data Wrangling
 
@@ -122,10 +122,10 @@ Note the following:
 * a dip over the christmas and new year period in 2017 (interestingly 2016 had barely noticeable effect)
 
 <br>
-&emsp;&emsp;Before continuing here, I opened another file in the editor (pipeline.R)  and start thinking about the pipeline. Building processes as we go along is the best way to make sure it is documented and ideas are not forgotten or lost. 
+&emsp;&emsp;Before continuing here, I opened another file in the editor (pipeline.R) and started thinking about the pipeline. Building processes as we go along is the best way to make sure it is documented and ideas are not forgotten or lost. 
 
 Start the pipeline with a simple flow:
-> Initialize >> Read data >> ...
+> Initialize >> Read data >> Data wrangling >> ...
 
 &emsp;&emsp;As we understand the data in EDA (exploratory data analysis), we can update this file either with code or just with simple comments. 
 
@@ -152,8 +152,10 @@ The plot of change over week describe the intuition at the time.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-stephourweekday.png)
 
-<br><br>
-### Model fit
+<br><br><br>
+
+## Model fit
+---
 
 &emsp;&emsp;It is immediately obvious that the data is almost linear here. It would be easy to model at this granularity, so model and look at residual without forgetting to remove unnecessary columns that are not continuous variables such as labels and repetitive values ( e.g. wday and wday.xts).
 
@@ -173,7 +175,135 @@ This looks better, now assess residuals.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals2.png)
 
-&emsp;&emsp;All the outliers have been removed. The data looks to be normally distributed too from the QQ plots. 
+&emsp;&emsp;All the outliers have been removed. The data looks to be normally distributed too from the QQ plots. Finally, after analyzing all the junctions, I proceeded to predict the entire data set. 
+<br><br>
+
+### Predicting the entire data set
+  
+Below is the main part file pipeline.R which was used to run the predictions. 
+
+{% highlight r %}
+
+junclist <- seq_along(dftrain)
+wdaylist <- seq_along(unique(dftrain$junc1[,"wday"]))
+hourlist <- seq(0,max(dftrain$junc1[,"hour"]))   #list starts from 0
+
+# iterate over list of junctions
+juncoutput=list()
+for( junc in junclist){
+    
+    train <- dftrain[[junc]]
+    test <- dftest[[junc]]
+    
+    # iterate over each day of week
+    dayoutput=list()
+    for(day in wdaylist ){
+        
+        # iterate over each hour of day
+        result = list()
+        for(hour in hourlist ){
+            
+            # filter training data based on hour and day
+            cond_hour <- train[,"hour"] == hour
+            cond_day <- train[,"wday"] == day
+            condtrain <- cond_day & cond_hour
+            
+            chunktrain <- train[ which(condtrain),] %>% rmcolm()
+            
+            # filter test data based on hour and data
+            cond_hour <- test[,"hour"] == hour
+            cond_day <- test[,"wday"] == day
+            condtest <- cond_day & cond_hour
+            
+            chunktest <- test[ which(condtest),] %>% rmcolm()
+            
+            if( dim(chunktrain)[1] == 0 | dim(chunktest)[1] == 0){
+                cat( "[+] junc:", junc, "  day:", day, "  hour:", hour, "\t SKIPPED\n")
+            #     cat( "\t\t\t\t", dim(chunktrain), "\n")
+            #     cat( "\t\t\t\t", dim(chunktest), "\n")
+                next
+            }
+            
+            
+            # fit and predict
+            fit <- lm(Vehicles~. , data=chunktrain)
+            # fit <- ranger( Vehicles~., data=chunktrain, 
+            #                num.trees=200, 
+            #                splitrule="extratrees",
+            #                importance="impurity"  )
+            
+            chunktrain[,"residuals"] <- fit$residuals
+            
+            # remove outliers
+            qqval <- quantile(chunktrain$residuals)
+            qrange <- 1.5*IQR(chunktrain$residuals)
+            cond1 <- chunktrain$residuals <= qqval[2]-qrange
+            cond2 <- chunktrain$residuals >= qqval[4]+qrange
+            cond_out <- cond1 | cond2
+            if( length( which( cond_out)) > 0) {
+                
+                chunktrain <- chunktrain[ which( !cond1 & !cond2),] %>% select( -residuals)
+            
+                fit <- lm(Vehicles~. , data=chunktrain)
+            }
+                
+            chunktest[,"Vehicles"] <- as.integer(predict( fit, chunktest))
+            # chunktest[,"Vehicles"] <- as.integer(predict( fit, chunktest)$predictions)
+            
+            
+            # compile output
+            output1 <- chunktest[, c( "year", "month", "day","hour")]
+            output2 <- as.data.frame( list( Vehicles=chunktest[, "Vehicles"]) )
+            dummy <- as.data.frame(list( Junction=rep( junc, dim(output1)[1] )))
+            result[[hour+1]] <- cbind( output1, dummy, output2)
+            
+            
+        }
+        
+        dayoutput[[day]] <- do.call( "rbind", result)
+        
+        
+    }
+    
+    juncoutput[[junc]] <- do.call( "rbind", dayoutput)
+    
+}
+
+# merge result
+final <- do.call( "rbind", juncoutput)
+# recreate ID column
+final[,"ID"] <- paste( final$year, 
+                       formatC( final$month, width=2, flag=0),
+                       formatC( final$day, width=2, flag=0),
+                       formatC( final$hour, width=2, flag=0),
+                       final$Junction,
+                       sep="")
+
+# fail-safe to prevent negatives
+final[which( final$Vehicles <0),"Vehicles"] <- 0
+
+# any duplicates?
+dupl <- dim(final[ which(duplicated(final$ID)),])[1] != 0
+cat("\n\n[+] Any duplicates?   ->", dupl,"\n")
+
+# predicted rows are the same as test df
+eqrows <- nrow(dftestraw) == nrow(final)
+cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
+
+{% endhighlight %}
+
+&emsp;&emsp; Essentially the code looks at each junctions and models at the level of hour of day and day of week. I am sure it is obvious that using for loops are not ideal and vectorized operations are preferred but this was a hackathon with limited time. Also, it helped me to step through the code as I was writing it without having to resort to global variables etc. If this was an actual project, it would obviously be converted to an actual function, especially the model call to make it easily changeable. 
+<br><br><br>
+
+## Result
+---
+Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. 
+
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-firstsubmission.PNG)
+
+
+
+
 
 
 [1]: https://datahack.analyticsvidhya.com/contest/mckinsey-analytics-hackathon/

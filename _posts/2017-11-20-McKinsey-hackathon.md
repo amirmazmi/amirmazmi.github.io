@@ -132,7 +132,7 @@ Moving on, I plotted some boxplots across the hours, days of the week and day of
 &emsp;&emsp;An interesting point to note is the small range of data in the early hours of the morning, suggesting that despite a large increase during the day the traffic at this hour has not significantly increased. 
 
 <br>
-The plot of change over week describe the intuition at the time. 
+The plot of change over week describe the intuition at the time.
 &emsp;*Note the plot below was created post event to explain this better*
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-changeoverweek.png)
@@ -144,6 +144,13 @@ The plot of change over week describe the intuition at the time.
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-stephourweekday.png)
 
 &emsp;&emsp;It is immediately obvious that the data is almost linear here. It would be easy to model at this granularity, so model and look at residual without forgetting to remove unnecessary columns that are not continuous variables such as labels and repetitive values ( e.g. wday and wday.xts).
+
+&emsp;&emsp;Normally at this point, I would look at variable correlations prior to building a model but in the moment, I had limited time and wanted to get at least one submission in and iterate based on the result. So I made a note and if I had time, I would come back to it. 
+
+
+
+
+
 
 
 

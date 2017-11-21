@@ -33,7 +33,6 @@ DateTime,Junction,Vehicles,ID
 2015-11-01 01:00:00,1,13,20151101011
 2015-11-01 02:00:00,1,10,20151101021
 2015-11-01 03:00:00,1,7,20151101031
-2015-11-01 06:00:00,1,9,20151101061
 2015-11-01 00:00:00,2,15,20151101001
 2015-11-01 01:00:00,2,13,20151101011
 2015-11-01 02:00:00,2,10,20151101021
@@ -268,7 +267,9 @@ for( junc in junclist){
     juncoutput[[junc]] <- do.call( "rbind", dayoutput)
     
 }
-
+{% endhighlight %}
+<br>.
+{% highlight r %}
 # merge result
 final <- do.call( "rbind", juncoutput)
 # recreate ID column
@@ -297,15 +298,24 @@ cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
 
 ## Result
 ---
-Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. 
+
+&emsp;&emsp;Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. There are two scores since one is the public data and the leaderboard score was for the private data. It was not bad  since the leader at the time had a score of about 5 (less is better - RMSE metric) and past the 100th place the score were in the triple digits. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-firstsubmission.PNG)
 
+Unfortunately, if you go to the leaderboard now you will not find my name on it. Why? Due to the way the submissions works, you could submit as many times to check your results but you had to click on a different (as in located elsewhere) to do a final submission. This was to the dismay of many as I found out in Slack chat, in fact, even the leader with the score of 5 is also not on the list. At one point, the leaderboard grew to 550 participants. 
 
 
+### What have I learned? 
 
+&emsp;&emsp;A lot but mostly pertaining to just being more efficient at looking at the data and building the pipelines. Previously, I had more time to analyse the data thoroughly, selecting models and tuning parameters. It was also suprising that I was not ranked at the bottom as I initially expected, this may have been more to the fact that I am comfortable working with time series data. 
 
+Now I understand why hackathons can be addictive, even doing one for a few hours really got my brain going. 
+
+All files can be found from my github [github.com/amirmazmi/mckinseyhack2017][3]
+
+<br><br>
 
 [1]: https://datahack.analyticsvidhya.com/contest/mckinsey-analytics-hackathon/
 [2]: https://rdrr.io/cran/timetk/f/README.md
-<br><br>
+[3]: https://github.com/amirmazmi/mckinseyhack2017

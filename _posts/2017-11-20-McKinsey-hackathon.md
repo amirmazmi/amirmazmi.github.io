@@ -174,7 +174,19 @@ This looks better, now assess residuals.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals2.png)
 
-&emsp;&emsp;All the outliers have been removed. The data looks to be normally distributed too from the QQ plots. Finally, after analyzing all the junctions, I proceeded to predict the entire data set. 
+&emsp;&emsp;All the outliers have been removed. The data looks to be normally distributed too from the QQ plots with a mean centred around zero. It would be great if there was more time for:
+* investigate residuals' independence as an estimate that the error terms are independent - no reletionship with prediced values or predictors
+* check for constant variance - from the QQ plots, it does seem this is the case. 
+<br>
+
+Now compare the fit and prediction of both with and without outliers. 
+
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-fitcompare.png)
+
+&emsp;&emsp;From a quick glance, both the fitted curve looks similar, but on closer inspection, the areas where outliers have been removed such as around 2nd September 2016 and 2nd March 2017 has a slightly better fit (smoother but this is subjective). 
+
+Finally, after analyzing all the junctions, proceed to predict the entire data set. 
+
 <br><br>
 
 ### Predicting the entire data set
@@ -292,6 +304,9 @@ cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
 
 ## Result
 ***
+
+# add plot of final and explanation
+
 
 &emsp;&emsp;Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. There are two scores since one is the public data and the leaderboard score was for the private data. It was not bad  since the leader at the time had a score of about 5 (less is better - RMSE metric) and past the 100th place the score were in the triple digits. 
 

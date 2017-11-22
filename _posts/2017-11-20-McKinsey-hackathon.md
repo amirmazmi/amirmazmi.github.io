@@ -305,24 +305,44 @@ cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
 ## Result
 ***
 
-# add plot of final and explanation
+&emsp;&emsp;The plots below show the final results. The predicted values seems to be ok for a simple lm model without much feature engineering. 
 
+Other observations:
+* model captures the overall increasing trend of the data
+* model captures the changes of different weekdays
 
+![_config.yml]({{ site.baseurl }}/images/2017-11-20-results.png)
+
+<br>
 &emsp;&emsp;Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. There are two scores since one is the public data and the leaderboard score was for the private data. It was not bad  since the leader at the time had a score of about 5 (less is better - RMSE metric) and past the 100th place the score were in the triple digits. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-firstsubmission.PNG)
 
 &emsp;&emsp;Unfortunately, if you go to the leaderboard now you will not find my name on it. Why? Due to the way the submissions works, you could submit as many times to check your results but you had to click on a different (as in located elsewhere) to do a final submission. This was to the dismay of many as I found out in Slack chat, in fact, even the leader with the score of 5 is also not on the list. At one point, the leaderboard grew to 550 participants. 
+<br>
 
+### What could have been done better? 
+
+* Better feature selection - checking the correlations between the predictors and removing low correlation features
+* Better model selection - arguably lm is okay but it is possible that other models may provide better fit
+* Analysis of residuals - check for independence and constant variance using statistical tests
+<br>
+
+### Questions 
+
+&emsp;&emsp; One question in my mind is, in this case, the modelling was done at the hour of day and day of week level, would modelling at the time series level with hour of day and day of week as predictors produce the same result? i.e. instead of looping through, just model at the high level. This would be an interesting investigation to understand modelling better. 
 
 ### What have I learned? 
 
-&emsp;&emsp;A lot but mostly pertaining to just being more efficient at looking at the data and building the pipelines. Previously, I had more time to analyse the data thoroughly, selecting models and tuning parameters. It was also suprising that I was not ranked at the bottom as I initially expected, this may have been more to the fact that I am comfortable working with time series data. 
+&emsp;&emsp;A lot but mostly pertaining to just being more efficient at looking at the data and building the pipelines. Generally, either during work or side-projects, I had more time to analyse the data thoroughly, selecting models and tuning parameters. It was also suprising that I was not ranked at the bottom as I initially expected, this may have been more to the fact that I have some experience working with time series data. 
 
 Now I understand why hackathons can be addictive, even doing one for a few hours really got my brain going. 
 
-<br><br>
-All files can be found from my github [github.com/amirmazmi/mckinseyhack2017][3]
+
+
+
+<br><br><br>
+*All files can be found from my github [github.com/amirmazmi/mckinseyhack2017][3]*
 
 <br><br><br><br>
 

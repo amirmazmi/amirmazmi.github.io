@@ -65,7 +65,6 @@ DateTime,Junction,ID
 <br>
 &emsp;&emsp;Ooh! Time-series data! This got me really excited, considering that I have time until my dinner engangement, I fired up RStudio. Drawing from my experience, this could go two ways either similar to share/forex prices (stochastic) or similar to building energy data (pattern based on hour of day, day of week etc.). 
 
-<br>
 Looking at the data itself, the following is obvious:
 * ID is just a concatenation of the date, hour and junction
 * The only features seems to be the date and time
@@ -77,11 +76,12 @@ Based on the rules, we are not to infer any other type of information outside of
 
 ### Data Wrangling
 
-&emsp;&emsp;After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the lubridate package, the time series features are extracted using the tk_augment_time_series from the package timetk (previously known as timekit). The functions extracts so many different layers of information from the datetime string. This should be followed by the usual *str()* and *summary()* to review the data.
+&emsp;&emsp;After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the *lubridate* package, the time series features are extracted using the *tk_augment_time_series()* from the package *timetk* (previously known as *timekit*). The functions extracts so many different layers of information from the datetime string. This should be followed by the usual *str()* and *summary()* to review the data.
 
-&emsp;&emsp;[*Read more about timetk.*][2] 
+[*Read more about timetk.*][2] 
 
-&emsp;&emsp;Before we proceed it is important to remember that just because the data contains timestamps, does not necessarily mean it is the correct timestamp. The timestamp could be in UTC where the data was collected in another part of the world. This is sometimes the case when working with time series data.
+
+&emsp;&emsp;Before we proceed it is important to keep in mind that just because the data contains timestamps, does not necessarily mean it is the correct timestamp. The timestamp could be in UTC where the data was collected in another part of the world, e.g. times of midnight and midday does not correlate with the date. This is sometimes the case when working with time series data. However, for this hackathon, this was ignore and the datetime is just considered as a continuous variable. 
 
 {% highlight r %}
 # separate data into junctions
@@ -106,52 +106,49 @@ names(dfjunc1)
 <br><br>
 
 ### Analysis
-Look at all the features extracted just from the datetime string. Next up was plotting the time series data itself. 
+&emsp;&emsp;Look at all the features extracted just from the datetime string. Next up was plotting the time series data itself. 
+
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-timeseries.png)
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-timeserieszoom.png)
 
-
-<br>
-&emsp;&emsp;From here, I noted the shape of traffic daily and there seems to be a pattern for different days of the week. This intuition is something I picked up from my previous role working with building energy consumption. In that role, an additional feature was the outside air temperature. Essentially, if we were to plot a 3-dimensional surface, the x and y axes would be hour of day and increasing time (which can be represented by POSIX time in the *index.num* column) with the dependent variable being number of vehicles.
+&emsp;&emsp;From here, I noted the shape of traffic daily and there seems to be a pattern for different days of the week. This intuition is something I picked up from my previous role working with building energy consumption, however, the additional feature in that data was the outside air temperature. Essentially, with this data, if we were to plot a 3-dimensional surface, the x and y axes would be hour of day and increasing time (which can be represented by POSIX time in the *index.num* column) with the dependent variable being number of vehicles.
 
 Note the following:
 * increasing trend over time (maybe population growth? cheap car loans? cheap cars?)
 * some spikes at points (possibly other road closures?)
 * a dip over the christmas and new year period in 2017 (interestingly 2016 had barely noticeable effect)
 
-<br>
-&emsp;&emsp;Before continuing here, I opened another file in the editor (pipeline.R) and started thinking about the pipeline. Building processes as we go along is the best way to make sure it is documented and ideas are not forgotten or lost. 
+&emsp;&emsp;Before continuing here, I opened another file in the editor called *pipeline.R* and started thinking about the pipeline. Building processes as we go along is the best way to make sure it is documented and ideas are not forgotten or lost. It also makes it easy to go back and iterate on the solution.
 
 Start the pipeline with a simple flow:
 > Initialize >> Read data >> Data wrangling >> ...
 
 &emsp;&emsp;As we understand the data in EDA (exploratory data analysis), we can update this file either with code or just with simple comments. 
 
-<br>
+
 Moving on, I plotted some boxplots across the hours, days of the week and day of months. 
+
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-boxplots.png)
 
-&emsp;&emsp;Note the outliers from the boxplots. It is expected to have outliers at the top where the traffic does spike but for the bottom part which we observe for christmas and new year, it is not observable below since it is mixed with other data. 
+&emsp;&emsp;Note the outliers from the boxplots. It is expected to have outliers at the top where the traffic does spike but for the bottom part which we observe for christmas and new year, it is not observable since it is mixed with other data. 
 
-&emsp;&emsp;At this point, it did not seem that the boxplots provided much value since they do not represent an accurate picture. Again, just look at hour between 10am and 7pm from the "Hour of day" figure, it is easy to understand that since the data is increasing over time, even the outliers are possibly just data at the later end of the time scale. 
+&emsp;&emsp;At this point, it did not seem that the boxplots provided much value since they do not provide a better view of the data. Just looking at hours between 10am and 7pm from the "Hour of day" figure, it is easy to understand that since the data is increasing over time, even the outliers are possibly just data at the later end of the time scale. 
 
 &emsp;&emsp;An interesting point to note is the small range of data in the early hours of the morning, suggesting that despite a large increase during the day the traffic at this hour has not significantly increased. 
 
 <br>
 The plot of change over week describe the intuition at the time.
 
-&emsp;*Note the plot below was created post event to explain this better*
+*Note the plot below was created post event to explain this better*
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-changeoverweek.png)
 
-
-<br>
-&emsp;&emsp;Progressing further and to confirm the intuition, I stepped through the hours of every weekday. The plot below shows the vehicles over time for the every 5pm of every Monday. 
+&emsp;&emsp;Progressing further and to confirm the intuition, I stepped through the hours of every weekday. The plot below shows the vehicles over time for every 5pm of every Monday. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-stephourweekday.png)
 
-<br><br><br>
+<br><br>
 
 ## Model fit
 ---
@@ -166,7 +163,7 @@ Next, to assess the residuals, create the figure below.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals1.png)
 
-&emsp;&emsp;It is clear that there are several outliers from the model. This could easily be as a result of a poor model which is known to be the case since the features were not filtered properly. Refocusing again on the pipeline, proceed to create some filters to remove the outliers as with better feature selection, this would already be automated. 
+&emsp;&emsp;It is clear that there are several outliers from the model. This could easily be as a result of a poor model which is known to be the case since the features were not filtered properly. Refocusing again on the pipeline, proceed to create some filters to remove the outliers so that when we come back, this would already be automated. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-actualvsfittedvalues2.png)
 
@@ -174,16 +171,18 @@ This looks better, now assess residuals.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals2.png)
 
-&emsp;&emsp;All the outliers have been removed. The data looks to be normally distributed too from the QQ plots with a mean centred around zero. It would be great if there was more time for:
+&emsp;&emsp;All the outliers have been removed. The data looks to be normally distributed too from the QQ plots with a mean centred around zero and there was no trend leftover, i.e. not captured by the model, since we see a random scatter. 
+
+It would be great if there was more time for:
 * investigate residuals' independence as an estimate that the error terms are independent - no reletionship with prediced values or predictors
 * check for constant variance - from the QQ plots, it does seem this is the case. 
-<br>
+<br><br>
 
-Now compare the fit and prediction of both with and without outliers. 
+Now compare the fit and prediction of both, with and without outliers. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-fitcompare.png)
 
-&emsp;&emsp;From a quick glance, both the fitted curve looks similar, but on closer inspection, the areas where outliers have been removed such as around 2nd September 2016 and 2nd March 2017 has a slightly better fit (smoother but this is subjective). 
+&emsp;&emsp;From a quick glance, both the fitted curve looks similar, but on closer inspection, the areas where outliers have been removed such as around 2nd August 2016 and 2nd Feb 2017 has a slightly better fit (smoother but this is subjective). 
 
 Finally, after analyzing all the junctions, proceed to predict the entire data set. 
 
@@ -273,7 +272,7 @@ for( junc in junclist){
     juncoutput[[junc]] <- do.call( "rbind", dayoutput)
 }
 {% endhighlight %}
-<br>.
+.
 {% highlight r %}
 # merge result
 final <- do.call( "rbind", juncoutput)
@@ -298,39 +297,42 @@ cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
 
 {% endhighlight %}
 
-&emsp;&emsp; Essentially the code looks at each junctions and models at the level of hour of day and day of week. I am sure it is obvious that using for loops are not ideal and vectorized operations are preferred but this was a hackathon with limited time. Also, it helped me to step through the code as I was writing it without having to resort to global variables etc. If this was an actual project, it would obviously be converted to an actual function, especially the model call to make it easily changeable. 
+&emsp;&emsp; Essentially the code looks at each junctions and models at the level of hour of day and day of week. I am sure it is obvious that using *for* loops are not ideal and vectorized operations are preferred but this was a hackathon with limited time. Also, it helped me to step through the code as I was writing it without having to resort to global variables etc. If this was an actual project, it would obviously be converted to a function, especially the model call to make it easily changeable. 
 <br><br><br>
 
 
 ## Result
 ***
 
-&emsp;&emsp;The plots below show the final results. The predicted values seems to be ok for a simple lm model without much feature engineering. 
+&emsp;&emsp;The figure below shows the final results. The predicted values seems to be ok for a simple *lm* model without much feature engineering. 
 
-Other observations:
-* model captures the overall increasing trend of the data
-* model captures the changes of different weekdays
+Other observations include the fact that the model captures:
+* the overall increasing trend of the data
+* the pattern of different weekdays
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-results.png)
 
 <br>
-&emsp;&emsp;Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. There are two scores since one is the public data and the leaderboard score was for the private data. It was not bad  since the leader at the time had a score of about 5 (less is better - RMSE metric) and past the 100th place the score were in the triple digits. 
+&emsp;&emsp;Below is a screenshot of the first submission which ranked 83 out of roughly 350 at the time. There are two scores since one is the public data and the leaderboard score was for the private data. It was not bad  since the leader at the time had a score of about 5 (less is better - RMSE metric) and past the 100th place the scores were in the triple digits. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-firstsubmission.PNG)
 
-&emsp;&emsp;Unfortunately, if you go to the leaderboard now you will not find my name on it. Why? Due to the way the submissions works, you could submit as many times to check your results but you had to click on a different (as in located elsewhere) to do a final submission. This was to the dismay of many as I found out in Slack chat, in fact, even the leader with the score of 5 is also not on the list. At one point, the leaderboard grew to 550 participants. 
+&emsp;&emsp;Unfortunately, if you go to the leaderboard now you will not find my name on it. Why? Due to the way the submissions works, you could submit as many times to check your results but you had to click on a different (as in, located elsewhere) to do a final submission. This was to the dismay of many as I found out in Slack chat, in fact, even the leader with the score of 5 is also not on the list. At one point, the leaderboard grew to 550 participants. 
 <br>
 
 ### What could have been done better? 
 
-* Better feature selection - checking the correlations between the predictors and removing low correlation features
-* Better model selection - arguably lm is okay but it is possible that other models may provide better fit
-* Analysis of residuals - check for independence and constant variance using statistical tests
+* Better feature selection
+    * checking the correlations between the predictors and removing low correlation features
+* Better model selection
+    * arguably lm is okay but it is possible that other models may provide better fit
+* Analysis of residuals 
+    * check for independence and constant variance using statistical tests
 <br>
 
 ### Questions 
 
-&emsp;&emsp; One question in my mind is, in this case, the modelling was done at the hour of day and day of week level, would modelling at the time series level with hour of day and day of week as predictors produce the same result? i.e. instead of looping through, just model at the high level. This would be an interesting investigation to understand modelling better. 
+&emsp;&emsp; One question left over in my mind is, in this case, the modelling was done at the hour of day and day of week level, would modelling at the time series level with hour of day and day of week as predictors produce the same result? i.e. instead of looping through, just model at the high level. This would be an interesting investigation to understand modelling better. 
 
 ### What have I learned? 
 

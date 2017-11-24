@@ -47,7 +47,7 @@ DateTime,Junction,Vehicles,ID
 2015-11-01 03:00:00,4,7,20151101031
 ...
 {% endhighlight %}
-And here is a snippet the test dataset. 
+And here is a snippet of the test dataset. 
 
 {% highlight r %}
 DateTime,Junction,ID
@@ -68,6 +68,7 @@ DateTime,Junction,ID
 Looking at the data itself, the following is obvious:
 * ID is just a concatenation of the date, hour and junction
 * The only features seems to be the date and time
+
 Based on the rules, we are not to infer any other type of information outside of the given dataset, i.e. don't assume holidays which are country specific.
 <br><br><br>
 
@@ -81,7 +82,7 @@ Based on the rules, we are not to infer any other type of information outside of
 [*Read more about timetk.*][2] 
 
 
-&emsp;&emsp;Before we proceed it is important to keep in mind that just because the data contains timestamps, does not necessarily mean it is the correct timestamp. The timestamp could be in UTC where the data was collected in another part of the world, e.g. times of midnight and midday does not correlate with the date. This is sometimes the case when working with time series data. However, for this hackathon, this was ignore and the datetime is just considered as a continuous variable. 
+&emsp;&emsp;Before we proceed it is important to keep in mind that just because the data contains timestamps, does not necessarily mean it is the correct timestamp. The timestamp could be in UTC where the data was collected in another part of the world, e.g. times of midnight and midday does not correlate with the data. This is sometimes the case when working with time series data. However, for this hackathon, this was ignored and the datetime is just considered as a continuous variable. 
 
 {% highlight r %}
 # separate data into junctions
@@ -117,7 +118,7 @@ names(dfjunc1)
 Note the following:
 * increasing trend over time (maybe population growth? cheap car loans? cheap cars?)
 * some spikes at points (possibly other road closures?)
-* a dip over the christmas and new year period in 2017 (interestingly 2016 had barely noticeable effect)
+* a dip over the christmas and new year period in 2017 (interestingly 2016 had a barely noticeable effect)
 
 &emsp;&emsp;Before continuing here, I opened another file in the editor called *pipeline.R* and started thinking about the pipeline. Building processes as we go along is the best way to make sure it is documented and ideas are not forgotten or lost. It also makes it easy to go back and iterate on the solution.
 
@@ -163,7 +164,7 @@ Next, to assess the residuals, create the figure below.
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-residuals1.png)
 
-&emsp;&emsp;It is clear that there are several outliers from the model. This could easily be as a result of a poor model which is known to be the case since the features were not filtered properly. Refocusing again on the pipeline, proceed to create some filters to remove the outliers so that when we come back, this would already be automated. 
+&emsp;&emsp;It is clear that there are several outliers from the model. This could easily be as a result of a poor model which is known to be the case since the features were not assessed properly. Refocusing again on the pipeline, proceed to create some filters to remove the outliers so that when we come back, this would already be automated. 
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-actualvsfittedvalues2.png)
 
@@ -297,7 +298,7 @@ cat("\n[+] Equal rows?         ->", eqrows, "\n\n")
 
 {% endhighlight %}
 
-&emsp;&emsp; Essentially the code looks at each junctions and models at the level of hour of day and day of week. I am sure it is obvious that using *for* loops are not ideal and vectorized operations are preferred but this was a hackathon with limited time. Also, it helped me to step through the code as I was writing it without having to resort to global variables etc. If this was an actual project, it would obviously be converted to a function, especially the model call to make it easily changeable. 
+&emsp;&emsp; Essentially the code looks at each junction and models at the level of hour of day and day of week. I am sure it is obvious that using *for* loops are not ideal and vectorized operations are preferred but this was a hackathon with limited time. Also, it helped me to step through the code as I was writing it without having to resort to global variables etc. If this was an actual project, it would obviously be converted to a function, especially the model call to make it easily changeable. 
 <br><br><br>
 
 
@@ -317,15 +318,15 @@ Other observations include the fact that the model captures:
 
 ![_config.yml]({{ site.baseurl }}/images/2017-11-20-firstsubmission.PNG)
 
-&emsp;&emsp;Unfortunately, if you go to the leaderboard now you will not find my name on it. Why? Due to the way the submissions works, you could submit as many times to check your results but you had to click on a different (as in, located elsewhere) to do a final submission. This was to the dismay of many as I found out in Slack chat, in fact, even the leader with the score of 5 is also not on the list. At one point, the leaderboard grew to 550 participants. 
-<br>
+&emsp;&emsp;Unfortunately, if you go to the leaderboard now you will not find my name on it. Why? Due to the way the submissions works, you could submit as many times to check your results but you had to click on a different link (as in, located elsewhere) to do a final submission. This was to the dismay of many as I found out in Slack chat, in fact, even the leader with the score of 5 is also not on the list. At one point, the leaderboard grew to 550 participants. 
+<br><br>
 
 ### What could have been done better? 
 
 * Better feature selection
-    * checking the correlations between the predictors and removing low correlation features
+    * check the correlations between the predictors and removing low correlation features
 * Better model selection
-    * arguably lm is okay but it is possible that other models may provide better fit
+    * arguably *lm* is okay but it is possible that other models may provide better fit
 * Analysis of residuals 
     * check for independence and constant variance using statistical tests
 <br>

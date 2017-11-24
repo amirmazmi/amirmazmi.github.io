@@ -7,7 +7,7 @@ title: McKinsey Analytics Online Hackathon
 
 &emsp;&emsp;To be honest, I don't remember how I found out about this event but I just signed up without thinking much and was not really planning on participating as I knew my weekend was full. Initially, the thought was just to see what kind of problem would be presented.
 
-*This post will focus on junction1 (one of four junctions) and describe the thinking at that time. During the event, a lot of time was spent exploring the data before even beginning to model. The steps here are definitely not optimal as time was very limited, so the initial focus was to be able to output a realistic result and see how it ranks.* 
+*This post will focus on junction 1 (one of four junctions) and describe the thinking at that time. During the event, a lot of time was spent exploring the data before even beginning to model. The steps here are definitely not optimal as time was very limited, so the initial focus was to be able to output a realistic result and see how it ranks.* 
 
 
 Jumping onto the site after a lunch engagement, the problem was as below. 
@@ -77,7 +77,7 @@ Based on the rules, we are not to infer any other type of information outside of
 
 ### Data Wrangling
 
-&emsp;&emsp;After reading in the data, first was to make the junction as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the *lubridate* package, the time series features are extracted using the *tk_augment_time_series()* from the package *timetk* (previously known as *timekit*). The functions extracts so many different layers of information from the datetime string. This should be followed by the usual *str()* and *summary()* to review the data.
+&emsp;&emsp;After reading in the data, first was to make the junctions as a factor so that the data can be split into 4 different dataframes. Next, convert datetime strings to POSIX using the *lubridate* package, the time series features are extracted using the *tk_augment_time_series()* from the package *timetk* (previously known as *timekit*). The functions extracts so many different layers of information from the datetime string. This should be followed by the usual *str()* and *summary()* to review the data.
 
 [*Read more about timetk.*][2] 
 
@@ -191,7 +191,7 @@ Finally, after analyzing all the junctions, proceed to predict the entire data s
 
 ### Predicting the entire data set
   
-Below is the main part file pipeline.R which was used to run the predictions. 
+Below is the main part of pipeline.R used to run the predictions. 
 
 {% highlight r %}
 

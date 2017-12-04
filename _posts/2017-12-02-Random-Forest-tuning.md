@@ -45,6 +45,8 @@ Before we continue, some details of R packages I am using:
 
 &emsp;&emsp;Next, we iterate over the trees at constant value of mtry to determine the best depth. Here, I tested values of *mtry=20* and *mtry=57*
 
+![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_tree_analysis_mtry_20-57.png)
+
 ![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_tree_analysis_mtry_20.png)
 
 ![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_tree_analysis_mtry_57.png)
@@ -57,6 +59,8 @@ Furthermore we note that for:
 
 
 
+
+<br><br><br><br>
 
 
 

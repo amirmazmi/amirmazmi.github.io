@@ -84,15 +84,15 @@ At this point it is clear, that the best ranges are:
 
 &emsp;&emsp;As with most problems in data science, you will have conventional wisdom (qualitative) and the results itself (quantitative), and sometimes both do not point in the same direction. It is likely that some problems that you work on will see these two diverge but what is important is to ask why this is the case and understand its implications for future data. 
 
-* Why is this the case?
-    * Possibly that because this is a regression (continuous variable instead of classification), it is necessary that more information is required at each split to better describe the data. 
+###### Why is this the case?
+* Possibly that because this is a regression (continuous variable instead of classification), it is necessary that more information is required at each split to better describe the data. 
 
-* What are the implications for future data?
-    * Given that this is the case for all of the stocks that I have been investigating over the past month, it is unlikely that it will vary below *mtry=50*. It is entirely possible that the optimal number of trees may move around but as we have seen, mtry has a bigger impact on the fit metric. 
+###### What are the implications for future data?
+* Given that this is the case for all of the stocks that I have been investigating over the past month, it is unlikely that it will vary below *mtry=50*. It is entirely possible that the optimal number of trees may move around but as we have seen, mtry has a bigger impact on the fit metric. 
 
-* Possible improvements?
-    * Buy a better computer ( Ryzen Threadripper comes to mind) or rent high cpu servers such as AWS. 
-    * I have been looking at possible use of GPUs for modelling but at this stage, it seems that there are several limitations and unless I were to write my own code, there are no packages that do this. Even if there were, it would be a very small number of models. 
+###### Possible improvements?
+* Buy a better computer ( Ryzen Threadripper comes to mind) or rent high cpu servers such as AWS. 
+* I have been looking at possible use of GPUs for modelling but at this stage, it seems that there are several limitations and unless I were to write my own code, there are no packages that do this. Even if there were, it would be a very small number of models. 
 
 
 

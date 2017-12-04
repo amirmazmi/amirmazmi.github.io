@@ -10,7 +10,7 @@ title: Random Forest Tuning
 <br><br><br>
 
 
-#### What do these parameters do?
+### What do these parameters do?
 > **What is mtry?**
 >
 > Mtry is the number of randomly chosen variables/features when forming a split in the tree. If the data has 60 different features/predictors, the model will select a subset of it during splitting and find the feature which reduces the node impurity the most or best explains the data (in simple terms, least error). 

@@ -7,6 +7,9 @@ title: Random Forest Tuning
 
 &emsp;&emsp;In this post, we will look at parameter tuning for random forest for mtry and trees. It will follow the standard grid search but deal with the "typical values" as compared to actual data. In this case, I am performing a regression modelling for stocks/shares in the Kuala Lumpur Stock Exchange (KLSE). 
 
+
+
+
 #### What do these parameters do?
 > **What is mtry?**
 >
@@ -23,6 +26,8 @@ title: Random Forest Tuning
 &emsp; *Here is a more comprehensive [explanation at Analytics Vidhya][1]*
 <br><br>
 
+
+
 ### Conventional wisdom
 Typical advice you will hear when working with random forests is: 
 * build deep trees until the magnitude of improvement for error tapers down 
@@ -33,6 +38,10 @@ Before we continue, some details of R packages I am using:
 * *ranger* - optimized (read as FAST!) random forest (parallelized over cpus)
 * *caret* - *postResample()* to measure RMSE and Rsquared
 <br><br>
+
+
+
+
 
 ### Actual results
 &emsp;&emsp;Generally, when we start tuning these parameters we essentially hold either one value constant and iterate over the other. In the figure below, that is exactly what I have done, set the number of trees at 150 and look at varying values for mtry where *mtry = sqrt(features) = 8*.
@@ -69,19 +78,21 @@ At this point it is clear, that the best ranges are:
 &emsp;&emsp;At this juncture, I have opted to iterate over mtry given that it provides the most significant impact and set *trees=150*
 <br><br>
 
-#### What does this mean? 
+
+
+### What does this mean? 
 
 &emsp;&emsp;As with most problems in data science, you will have conventional wisdom (qualitative) and the results itself (quantitative), and sometimes both do not point in the same direction. It is likely that some problems that you work on will see these two diverge but what is important is to ask why this is the case and understand its implications for future data. 
 
 * Why is this the case?
-** Possibly that because this is a regression (continuous variable instead of classification), it is necessary that more information is required at each split to better describe the data. 
+    * Possibly that because this is a regression (continuous variable instead of classification), it is necessary that more information is required at each split to better describe the data. 
 
 * What are the implications for future data?
-** Given that this is the case for all of the stocks that I have been investigating over the past month, it is unlikely that it will vary below *mtry=50*. It is entirely possible that the optimal number of trees may move around but as we have seen, mtry has a bigger impact on the fit metric. 
+    * Given that this is the case for all of the stocks that I have been investigating over the past month, it is unlikely that it will vary below *mtry=50*. It is entirely possible that the optimal number of trees may move around but as we have seen, mtry has a bigger impact on the fit metric. 
 
 * Possible improvements?
-** Buy a better computer ( Ryzen Threadripper comes to mind) or rent high cpu servers such as AWS. 
-** I have been looking at possible use of GPUs for modelling but at this stage, it seems that there are several limitations and unless I were to write my own code, there are no packages that do this. Even if there were, it would be a very small number of models. 
+    * Buy a better computer ( Ryzen Threadripper comes to mind) or rent high cpu servers such as AWS. 
+    * I have been looking at possible use of GPUs for modelling but at this stage, it seems that there are several limitations and unless I were to write my own code, there are no packages that do this. Even if there were, it would be a very small number of models. 
 
 
 

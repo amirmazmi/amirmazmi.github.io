@@ -7,7 +7,7 @@ title: Random Forest Tuning
 
 &emsp;&emsp;In this post, we will look at parameter tuning for random forest for mtry and trees. It will follow the standard grid search but deal with the "typical values" as compared to actual data. In this case, I am performing a regression modelling for stocks/shares in the Kuala Lumpur Stock Exchange (KLSE). 
 
-
+<br><br><br>
 
 
 #### What do these parameters do?
@@ -24,7 +24,7 @@ title: Random Forest Tuning
 
 
 &emsp; *Here is a more comprehensive [explanation at Analytics Vidhya][1]*
-<br><br>
+<br><br><br>
 
 
 
@@ -37,7 +37,7 @@ Typical advice you will hear when working with random forests is:
 Before we continue, some details of R packages I am using:
 * *ranger* - optimized (read as FAST!) random forest (parallelized over cpus)
 * *caret* - *postResample()* to measure RMSE and Rsquared
-<br><br>
+<br><br><br>
 
 
 
@@ -75,8 +75,8 @@ At this point it is clear, that the best ranges are:
 
 &emsp;&emsp;If I were to choose the best solution, I would have implemented the modelling to perform a search over the two ranges and use the optimal model. However, I have to operate under certain constraints, namely, computation time given that I am working on an old *Intel i5-750* and also the fact that I am modelling the entire main board ( approx. 200 stocks after filtering).
 
-&emsp;&emsp;At this juncture, I have opted to iterate over mtry given that it provides the most significant impact and set *trees=150*
-<br><br>
+&emsp;&emsp;At this juncture, I have opted to iterate over mtry given that it provides the most significant impact and set *trees=150*.
+<br><br><br>
 
 
 

@@ -32,11 +32,11 @@ Before we continue, some details of R packages I am using:
 &emsp;&emsp;Generally, when we start tuning these parameters we essentially hold either one value constant and iterate over the other. In the figure below, that is exactly what I have done, set the number of trees at 150 and look at varying values for mtry where *mtry = sqrt(features) = 8*.
 
 
-![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_mtry_5-13_analysis.png
+![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_mtry_5-13_analysis.png)
 
 &emsp;&emsp;From the figure, it is obvious that *mtry=12* is the best since it gives the lowest value for RMSE around 0.072. However, the overall Rsquared is very low around 0.45. If we were to stick with the "typical advice" then the solution would have been to choose *mtry=12* and continue on. However, being curious as usual, I decided to iterate mtry at the higher extreme where having all the possible features available for consideration. 
 
-![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_mtry_40-57_analysis.png
+![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_mtry_40-57_analysis.png)
 
 &emsp;&emsp;As is noticeable, even the range for RMSE has dropped to below 0.07 and the Rsquared has climbed to higher than 0.5. So it seems that having all, if not most, of the features considered at each split improves the model. 
 
@@ -45,9 +45,9 @@ Before we continue, some details of R packages I am using:
 
 &emsp;&emsp;Next, we iterate over the trees at constant value of mtry to determine the best depth. Here, I tested values of *mtry=20* and *mtry=57*
 
-![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_tree_analysis_mtry_20.png
+![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_tree_analysis_mtry_20.png)
 
-![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_tree_analysis_mtry_57.png
+![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_tree_analysis_mtry_57.png)
 
 &emsp;&emsp;One of the first things to note is the difference in the ranges, RMSE and Rsquared drastically drops at mtry=57.
 

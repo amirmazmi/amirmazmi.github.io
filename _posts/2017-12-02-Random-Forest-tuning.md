@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Random Forest Tuning
+date: 2017-12-02
 ---
 
 &emsp;&emsp;Over the past 2 years since learning Python/R from zero, I have been forcing myself to learn how to build an algorithmic trading program. It has definitely been a very steep curve but as with everything else, a challenege is what I enjoy. It definitely took a lot of reading on trading strategies but also improving my programming skills in general. I remember how much I forced myself to do countless variations "Hello World" just to learn print functions. Now, I share my knowledge as much as I can with other people who are interested, either programming in general, infosec or data science.      

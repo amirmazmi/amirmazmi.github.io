@@ -47,7 +47,8 @@ Before we continue, some details of R packages I am using:
 &emsp;&emsp;Generally, when we start tuning these parameters we essentially hold either one value constant and iterate over the other. In the figure below, that is exactly what I have done, set the number of trees at 150 and look at varying values for mtry where *mtry = sqrt(features) = 8*.
 
 
-![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_mtry_5-13_analysis.png)
+![_config.yml]({{ site.baseurl }}/images/2017-12-02/wprts_mtry_5-13_analysis.png)  
+
 {% include image.html file="/images/2017-12-02/wprts_mtry_5-13_analysis.png" description="This is an image." %}
 
 

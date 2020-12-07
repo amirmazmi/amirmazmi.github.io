@@ -8,7 +8,7 @@ published: true
 
 &emsp;&emsp;For a long time, even as I was tinkering with the various boards and modules this problem was always at the back of my mind. A few years ago, I bought a box of solar cells and it unfortunately had to stay in the box as I moved to Sydney and Singapore. Soon I realized that I was trying this big problem in one go instead of in smaller pieces. This realization came about recently when I bought some 18650 cells and assembled a fan to blow away some of the fumes during soldering jobs. 
 
-{% include image.html file="/images/2017-12-02/wprts_mtry_5-13_analysis.png" description="This is an image." %}
+{% include image.html file="/images/2017-12-02/wprts_mtry_5-13_analysis.png" description="This is an image." %}  
 [comment]: <> (insert image of fan and module)
 
 [comment]: <> (insert image of power bank)

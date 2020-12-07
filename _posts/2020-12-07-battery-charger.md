@@ -1,7 +1,7 @@
 ---
 layout: post
 title: The issue of power supply
-published: true
+published: false
 ---
 
 &emsp;&emsp;There are a lot of small solutions I would like to deploy around the house, be it using arduinos, raspi or even just a simple analog circuit. In most cases, an outlet is either too far or it would require pulling a long extension cable. Next, there is the simple fact that these solutions do not actually require 220-240V AC as typically they require 5V or 12V DC. 

